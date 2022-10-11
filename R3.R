@@ -10,18 +10,18 @@
 # 4. tidyverse commands for manipulating data in R
 # 5. (just a bit) on RESHAPING data in R
 
-# Introducing tidy datasets
+# Packages
+library(tidyverse)
+# library(tibble)  # this is included in tidyverse anyway
+
+# Introducing tidy datasets and tibbles ----------------------------------------
 tidyr::billboard[, 1:7]
 View(tidyr::billboard[, 1:7])
 
-# Packages
-library(tidyverse)
-# library(tibble)
-
-# Versus data frames
-iris 
+# Tibbles versus data frames
+iris  # a data frame
 str(iris)
-tbl_iris <- as_tibble(iris)
+tbl_iris <- as_tibble(iris)  # coerce to tibbles
 tbl_iris
 
 # Tibbles are lazy
@@ -48,12 +48,12 @@ t <- tibble(
 tibble(x = 1:4, y = 1)  # this is fine.
 tibble(x = 1:4, y = 1:2)  # this is not!
 
-# Pipeline -----------
+# Pipeline ---------------------------------------------------------------------
 # Slide 14
 data.frame(a = 1:3, b = 3:1) %>%
-  lm(formula = a ~ b) 
-?lm
-# this is the same as 
+  lm(formula = a ~ b)  # look at ?lm
+
+# The above code is the same as 
 data.frame(a = 1:3, b = 3:1) %>%
   lm(formula = a ~ b, data = .) 
 
@@ -65,8 +65,7 @@ data.frame(a = 1:3, b = 3:1) %>%
 data.frame(a = 1:3, b = 3:1) %>%
   .[[length(.)]]
 
-
-# Functions for data manipulation
+# Functions for data manipulation ----------------------------------------------
 # filter
 library(dplyr)
 library(nycflights13) # install.packages("nycflights13")
@@ -116,9 +115,9 @@ flights %>%
 flights %>%
   select(starts_with("dep"))
 
-# other helpers provided by tidyselect: starts_with, ends_with
-# everything, matches, num_range, one_of, everything, last_col
-# Take a look at the tidyselect github page
+# other helpers provided by tidyselect: starts_with, ends_with everything,
+# matches, num_range, one_of, everything, last_col Take a look at the tidyselect
+# page https://tidyselect.r-lib.org/reference/language.html
 
 # Select only numeric columns
 flights %>%
@@ -185,14 +184,13 @@ flights %>%
 
 # Mutate in groups
 # This is the difference between summarise and mutate
-# Summarise reduces the number of rows
-# while mutate keeps the number of rows
+# Summarise reduces the number of rows while mutate keeps the number of rows
 flights %>%
   group_by(month) %>%
   mutate(max_delay = max(dep_delay, na.rm = TRUE)) %>%
   select(month, max_delay)
 
-# Wide vs Long data sets
+# Wide vs Long data sets -------------------------------------------------------
 # n > p (this is tall and skinny)
 # p > n (this is wide and short)
 d <- tribble(
@@ -209,11 +207,3 @@ d_long <-
 pivot_wider(d_long, id_cols = c("country"),
             names_from = year,
             values_from = cases)
-
-
-
-
-
-
-
-
