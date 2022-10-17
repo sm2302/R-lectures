@@ -10,4 +10,4 @@ http://13.212.168.247:18888
 
 ![](gg.gif)
 
-![](palmerpenguins.pdf)
+![](palmerpenguins.png)
